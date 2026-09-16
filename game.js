@@ -45,25 +45,29 @@ class mainScene {
     });
   }
   
-  update() {
-    // This method is called 60 times per second after create()  创建完之后每秒60次调用
+   update(time, delta) {
+      // delta：距离上次更新经过的时间，单位毫秒
+      // 以 60 FPS 时每帧移动 3 像素为基准
+    const step = 3 * delta / (1000 / 60);
+    // This method is designed but not guarenteed to be called 60 times per second after create()  创建完之后被设定为每秒60次调用但不保证
+    //  用step常量保证速度在不同帧率下一样一样的
     // It will handle all the game's logic, like movements 它掌管游戏所有逻辑，比如移动。
     
     // 处理四个方向键
     // Handle horizontal movements
     if (this.arrow.right.isDown) {
       // If the right arrow is pressed, move to the right
-      this.player.x += 3;
+      this.player.x += step;
     } else if (this.arrow.left.isDown) {
       // If the left arrow is pressed, move to the left
-      this.player.x -= 3;
+      this.player.x -= step;
     } 
 
     // Do the same for vertical movements
     if (this.arrow.down.isDown) {
-      this.player.y += 3;
+      this.player.y += step;
     } else if (this.arrow.up.isDown) {
-      this.player.y -= 3;
+      this.player.y -= step;
     } 
     
     // If the player is overlapping with the coin
