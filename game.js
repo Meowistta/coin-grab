@@ -11,7 +11,8 @@ class mainScene {
     // Parameters: name of the sprite, path of the image 参数：贴图名字和路径。
     this.load.image('player', 'assets/player.png');
     this.load.image('coin', 'assets/coin.png');
-   } 
+  } 
+  
   create() {
     // This method is called once, just after preload() 仅在预加载之后进行单次调用
     // It will initialize our scene, like the positions of the sprites 初始化场景，比如贴图件等的位置
@@ -28,10 +29,21 @@ class mainScene {
     // A lot of options are available, these are the most important ones 这是最重要的文本格式化选项
     let style = { font: '20px Arial', fill: '#fff' };
 
-   // Display the score in the top left corner 分数放在左上角
-   // Parameters: x position, y position, text, style 参数：x，y 文字，风格
-   this.scoreText = this.add.text(20, 20, 'score: ' + this.score, style);
+    // Display the score in the top left corner 分数放在左上角
+    // Parameters: x position, y position, text, style 参数：x，y 文字，风格
+    this.scoreText = this.add.text(20, 20, 'score: ' + this.score, style);
+    
+    // 补间动画
+    // Create a new tween 
+    this.tweens.add({
+      targets: this.player, // on the player 在主角上
+      duration: 200, // for 200ms 
+      scaleX: 1.2, // that scale vertically by 20% 水平20%
+      scaleY: 1.2, // and scale horizontally by 20%  垂直20%
+      yoyo: true, // at the end, go back to original scale  最后回去
+    });
   }
+  
   update() {
     // This method is called 60 times per second after create()  创建完之后每秒60次调用
     // It will handle all the game's logic, like movements 它掌管游戏所有逻辑，比如移动。
@@ -39,51 +51,42 @@ class mainScene {
     // 处理四个方向键
     // Handle horizontal movements
     if (this.arrow.right.isDown) {
-    // If the right arrow is pressed, move to the right
-     this.player.x += 3;
+      // If the right arrow is pressed, move to the right
+      this.player.x += 3;
     } else if (this.arrow.left.isDown) {
-     // If the left arrow is pressed, move to the left
+      // If the left arrow is pressed, move to the left
       this.player.x -= 3;
-   } 
+    } 
 
-   // Do the same for vertical movements
-   if (this.arrow.down.isDown) {
+    // Do the same for vertical movements
+    if (this.arrow.down.isDown) {
       this.player.y += 3;
-   } else if (this.arrow.up.isDown) {
+    } else if (this.arrow.up.isDown) {
       this.player.y -= 3;
- } 
+    } 
+    
+    // If the player is overlapping with the coin
+    //  如果创上硬币了
+    if (this.physics.overlap(this.player, this.coin)) {
+      // Call the new hit() method 调用命中方法
+      this.hit();
+    }
   }
+  
   //检测碰撞。
   hit() {
     //随机移动硬币。
-  // Change the position x and y of the coin randomly
-  this.coin.x = Phaser.Math.Between(100, 600);
-  this.coin.y = Phaser.Math.Between(100, 300);
-  // 计分
-  // Increment the score by 10
-  this.score += 10;
-  // 更改计分板
-  // Display the updated score on the screen
-  this.scoreText.setText('score: ' + this.score);
+    // Change the position x and y of the coin randomly
+    this.coin.x = Phaser.Math.Between(100, 600);
+    this.coin.y = Phaser.Math.Between(100, 300);
+    // 计分
+    // Increment the score by 10
+    this.score += 10;
+    // 更改计分板
+    // Display the updated score on the screen
+    this.scoreText.setText('score: ' + this.score);
+  }
 }
-  // If the player is overlapping with the coin
-  //  如果创上硬币了
-if (this.physics.overlap(this.player, this.coin)) {
-  // Call the new hit() method 调用命中方法
-  this.hit();
-}
-}
-// 补间动画
-// Create a new tween 
-this.tweens.add({
-  targets: this.player, // on the player 在主角上
-  duration: 200, // for 200ms 
-  scaleX: 1.2, // that scale vertically by 20% 水平20%
-  scaleY: 1.2, // and scale horizontally by 20%  垂直20%
-  yoyo: true, // at the end, go back to original scale  最后回去
-  
-});
-
 
 new Phaser.Game({
   width: 700, // Width of the game in pixels 游戏像素宽度
