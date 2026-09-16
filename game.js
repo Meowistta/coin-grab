@@ -32,7 +32,8 @@ class mainScene {
     // Display the score in the top left corner 分数放在左上角
     // Parameters: x position, y position, text, style 参数：x，y 文字，风格
     this.scoreText = this.add.text(20, 20, 'score: ' + this.score, style);
-    
+    // 案件对象处理
+    this.arrow = this.input.keyboard.createCursorKeys();
     // 补间动画
     // Create a new tween 
     this.tweens.add({
@@ -47,7 +48,7 @@ class mainScene {
   update() {
     // This method is called 60 times per second after create()  创建完之后每秒60次调用
     // It will handle all the game's logic, like movements 它掌管游戏所有逻辑，比如移动。
-    this.arrow = this.input.keyboard.createCursorKeys();
+    
     // 处理四个方向键
     // Handle horizontal movements
     if (this.arrow.right.isDown) {
