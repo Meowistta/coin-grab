@@ -6,6 +6,7 @@ class mainScene {
   preload() {
     // This method is called once at the beginning 这个方法在开始时调用
     // It will load all the assets, like sprites and sounds  预加载声音，贴图件等
+    
   }
   create() {
     // This method is called once, just after preload() 仅在预加载之后进行单次调用
@@ -16,3 +17,11 @@ class mainScene {
     // It will handle all the game's logic, like movements 它掌管游戏所有逻辑，比如移动。
   }
 }
+new Phaser.Game({
+  width: 700, // Width of the game in pixels 游戏像素宽度
+  height: 400, // Height of the game in pixels  游戏像素高度
+  backgroundColor: '#3498db', // The background color (blue)  背景色
+  scene: mainScene, // The name of the scene we created  场景名称
+  physics: { default: 'arcade' }, // The physics engine to use   物理引擎
+  parent: 'game', // Create the game inside the <div id="game">  game挂载节点
+});
